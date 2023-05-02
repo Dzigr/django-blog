@@ -1,14 +1,21 @@
-from django.urls import reverse
-from django.views.generic import TemplateView
-from django.shortcuts import redirect
+from django.views import View
+from django.shortcuts import render, get_object_or_404
+from .models import Article
 
-class IndexPageView(TemplateView):
 
-    template_name = 'article/index.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
+class IndexPageView(View):
 
     def get(self, request, *args, **kwargs):
-        return redirect(reverse('article', kwargs={'tag': 'python', 'article_id': 55}))
+        articles = Article.objects.all()[:15]
+        return render(request, 'articles/index.html', context={
+            'articles': articles,
+        })
+
+
+class ArticleView(View):
+
+    def get(self, request, *args, **kwargs):
+        article = get_object_or_404(Article, id=kwargs['id'])
+        return render(request, 'articles/show.html', context={
+            'article': article,
+        })

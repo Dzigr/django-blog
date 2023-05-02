@@ -21,6 +21,6 @@ from django_blog import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('about/', views.about),
-    path('', views.IndexPageView.as_view()),
-    path('article/', include('django_blog.article.urls')),
+    path('', views.IndexPageView.as_view(), name='index'),
+    path('articles/', include('django_blog.article.urls')),
 ]
