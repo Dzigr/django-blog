@@ -9,6 +9,10 @@
         <tr>
             <th><h2><a href="{% url 'article_id' article.id %}">{{ article.name }}</a></h2></th>
             <th><h5><a href="{% url 'article_edit' article.id %}">Редактировать</a></h5></th>
+            <th><form action="{% url 'article_delete' article.id %}" method="post">
+                {% csrf_token %}
+                <input class="btn btn-danger" type="submit" value="Удалить">
+                </form></th>
         </tr>
         </thead>
         <tbody>
